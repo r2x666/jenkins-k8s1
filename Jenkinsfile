@@ -10,6 +10,7 @@ pipeline {
             steps {
                 sh 'docker build -t r2x666/jenkins-docker:3.0.0 .'
             }
+         }
         stage ('Push docker image'){
             steps {
                 withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerPWD')]) {
@@ -19,5 +20,4 @@ pipeline {
             }
         }
     }
-}
 }
