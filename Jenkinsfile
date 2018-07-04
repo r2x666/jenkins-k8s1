@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-      stage ('Pulling Git'){
+      stage ('Pull Git'){
           steps {
                git credentialsId: 'GIT-Login', url: 'https://github.com/r2x666/jenkins-k8s1'
             }
