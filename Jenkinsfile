@@ -1,22 +1,34 @@
 pipeline {
     agent any
     stages {
-      stage ('Pull Git'){
-          steps {
-               git credentialsId: 'GIT-Login', url: 'https://github.com/r2x666/jenkins-k8s1'
+	stage ('Pull Code') {
+	   steps {
+		echo "Checkout SCM"
+	   }
+	stage ('Build') {
+	   steps {
+		echo "Build Code"
+	   }
+        stage('Test Windows') {
+            steps {
+                parallel("Win": {
+                    echo "hello Windows"
+                },
+                        "second": {
+                            echo "world"
+                        }
+                )
             }
         }
-        stage ('Build docker image'){
+        stage('Test Unix') {
             steps {
-                sh 'docker build -t r2x666/jenkins-docker:3.0.0 .'
-            }
-         }
-        stage ('Push docker image'){
-            steps {
-                withCredentials([string(credentialsId: 'docker-pwd', variable: 'DockerPWD')]) {
-    		  sh "docker login -u r2x666 -p ${DockerPWD}"
-		}
-                sh 'docker push r2x666/jenkins-docker:3.0.0 .'
+                parallel("Unix Testing": {
+                    echo "hello"
+                },
+                        "second": {
+                            echo "Unix"
+                        }
+                )
             }
         }
     }
