@@ -13,24 +13,29 @@ pipeline {
 
 	   }
         }
-        stage('one') {
+        stage('Build Docker Image') {
             steps {
-                parallel("first": {
-                    echo "hello"
+                parallel("RMS Docker": {
+                    echo "Build"
+                    echo "Push"
                 },
-                        "second": {
-                            echo "world"
+                        "MGS Docekr build": {
+                            echo " Build MGS"
+                            echo "Push MGS"
                         }
                 )
             }
         }
-        stage('two') {
+        stage('Deploy') {
             steps {
-                parallel("first": {
-                    echo "hello"
+                parallel("RMS": {
+                    echo "hello RMS"
                 },
-                        "second": {
-                            echo "world"
+                        "MGS": {
+                            echo "Hello MGS Deploy"
+                        },
+                        "RMN": {
+                            echo "Hello RMNi Deploy"
                         }
                 )
             }
