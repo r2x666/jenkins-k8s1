@@ -1,18 +1,22 @@
 pipeline {
     agent any
     stages {
-	stage ('Pull Code') {
+	stage ('Pull Build Code'){
 	   steps {
-		echo "Checkout SCM"
+                  parallel("RMS": {
+                    echo "hello RMS"
+                },      
+                        "MGS": {
+                            echo "Hello MGS"
+                        }
+                )
+
 	   }
-	stage ('Build') {
-	   steps {
-		echo "Build Code"
-	   }
-        stage('Test Windows') {
+        }
+        stage('one') {
             steps {
-                parallel("Win": {
-                    echo "hello Windows"
+                parallel("first": {
+                    echo "hello"
                 },
                         "second": {
                             echo "world"
@@ -20,13 +24,13 @@ pipeline {
                 )
             }
         }
-        stage('Test Unix') {
+        stage('two') {
             steps {
-                parallel("Unix Testing": {
+                parallel("first": {
                     echo "hello"
                 },
                         "second": {
-                            echo "Unix"
+                            echo "world"
                         }
                 )
             }
